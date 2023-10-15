@@ -1,12 +1,6 @@
 # ANIMA Chatbot 
 
-<div align="center">
-    <img src="your-logo-url-here" width="200">
-</div>
 
-![Build Status](https://img.shields.io/badge/build-passing-green)
-![Version 1.0](https://img.shields.io/badge/version-1.0-blue)
-![Python](https://img.shields.io/badge/python-3.8+-blue)
 
 ---
 
@@ -26,7 +20,7 @@ ANIMA is an Advanced Nature Inspired Multidisciplinary Assistant designed to pro
 
 ## Installation 
 
-Make sure you download Ollama.ai [OLLAMA](https://ollama.ai/)
+Make sure you download OLLAMA](https://ollama.ai/) (MacOS + Linux)
 
 Open up your Terminal and run the following commands separately.
 
