@@ -171,6 +171,7 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
 };
 
 // Listen for messages from the main thread
+// Listen for messages from the main thread
 self.addEventListener("message", async (event: any) => {
   self.postMessage({
     type: "log",
@@ -187,6 +188,14 @@ self.addEventListener("message", async (event: any) => {
       });
       throw e;
     }
+  } else if (event.data.bypassPDF) {  // New condition to check for direct chat
+    const text = event.data.messages[event.data.messages.length - 1].content;
+    const directResponse = await ollama.generate(text);  // Replace 'generate' with actual function if different
+
+    self.postMessage({
+      type: "directResponse",
+      data: directResponse,
+    });
   } else {
     try {
       await queryVectorStore(event.data.messages);
@@ -204,3 +213,4 @@ self.addEventListener("message", async (event: any) => {
     data: "OK",
   });
 });
+
