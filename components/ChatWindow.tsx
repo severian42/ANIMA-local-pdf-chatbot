@@ -220,7 +220,7 @@ export function ChatWindow(props: {
           [...messages]
             .reverse()
             .map((m, i) => (
-              <ChatMessageBubble key={i} message={m} </ChatMessageBubble>
+              <ChatMessageBubble key={i} message={m}></ChatMessageBubble>
             ))
         ) : (
           ""
