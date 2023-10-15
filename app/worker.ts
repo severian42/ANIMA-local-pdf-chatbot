@@ -170,12 +170,6 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
   });
 };
 
-// New condition added to the event listener
-self.addEventListener("message", async (event: any) => {
-  self.postMessage({
-    type: "log",
-    data: `Received data!`,
-  });
 
   if (event.data.pdf) {
     try {
