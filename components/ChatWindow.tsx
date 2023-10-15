@@ -180,7 +180,7 @@ export function ChatWindow(props: {
               <br/>
               <pre className="inline-flex px-2 py-1 my-2 rounded">$ ollama run severian/anima
               <br/>
-              $ OLLAMA_ORIGINS=https://https://anima-pdf-chat.vercel.app OLLAMA_HOST=127.0.0.1:11435 ollama serve</pre>
+              $ OLLAMA_ORIGINS=https://anima-pdf-chat.vercel.app OLLAMA_HOST=127.0.0.1:11435 ollama serve</pre>
             </span>
           </li>
           <li className="hidden text-l md:block">
