@@ -8,14 +8,14 @@ import { ChatWindowMessage } from '@/schema/ChatWindowMessage';
 import { useState, type FormEvent } from "react";
 import { Feedback } from 'langsmith';
 
-export function ChatMessageBubble(props: { message: ChatWindowMessage }) {
+export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?: string }) {
   const { role, content, runId } = props.message;
 
   const colorClassName =
     role === "human" ? "bg-sky-600" : "bg-slate-50 text-black";
   const alignmentClassName =
     role === "human" ? "ml-auto" : "mr-auto";
-  //const prefix = role === "human" ? 
+  const prefix = role === "human" ? "🧑" : props.aiEmoji;
 
   const [isLoading, setIsLoading] = useState(false);
   const [feedback, setFeedback] = useState<Feedback | null>(null);
