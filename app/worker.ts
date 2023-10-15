@@ -180,16 +180,18 @@ const preloadPDF = async (pdfURL: string) => {
   return pdfBlob;
 };
 
-// Try to preload the PDF at worker initialization
-try {
-  preloadedPDFBlob = await preloadPDF('/biomimetics-07-00103.pdf');
-} catch (e: any) {
-  self.postMessage({
-    type: "error",
-    error: `Failed to preload PDF: ${e.message}`,
-  });
-  throw e;
-}
+// Use an immediately invoked async function to preload the PDF
+(async () => {
+  try {
+    preloadedPDFBlob = await preloadPDF('/biomimetics-07-00103.pdf');
+  } catch (e: any) {
+    self.postMessage({
+      type: "error",
+      error: `Failed to preload PDF: ${e.message}`,
+    });
+    throw e;
+  }
+})();
 
 // Listen for messages from the main thread
 self.addEventListener("message", async (event: any) => {
