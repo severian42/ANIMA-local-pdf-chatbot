@@ -4,14 +4,14 @@
 
 /* Background and Text */
 body {
-  color: #c2c2c2;  /* Light Gray for better contrast */
+  color: #eeeeee;  /* Light Gray for better contrast */
   background: #013220;  /* Deep Forest Green */
 }
 
 /* Input and Textarea */
 body input,
 body textarea {
-  color: #D3D3D3;  /* Light Gray */
+  color: #525252;  /* Light Gray */
 }
 
 /* Links */
@@ -38,7 +38,7 @@ pre {
 /* Preformatted Text */
 pre {
   background-color: #2E8B57;  /* Sea Green */
-  color: #828282;  /* Light Gray */
+  color: #e3e3e3;  /* Light Gray */
 }
 
 /* List Items */
