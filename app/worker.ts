@@ -189,31 +189,57 @@ self.addEventListener("message", async (event: any) => {
     }
   } 
   // Existing condition for bypassPDF remains unchanged
-  else if (event.data.directChatWithAI) {
-  const text = event.data.messages[event.data.messages.length - 1].content;
-  try {
-    // Assuming ollama.generate interfaces with Ollama's /api/generate endpoint
-    const directResponse = await ollama.generate(text);
+  self.addEventListener("message", async (event: any) => {
+  self.postMessage({
+    type: "log",
+    data: `Received data!`,
+  });
+
+  if (event.data.pdf) {
+    try {
+      await embedPDF(event.data.pdf);
+    } catch (e: any) {
+      self.postMessage({
+        type: "error",
+        error: e.message,
+      });
+      throw e;
+    }
+  } 
+  // Existing condition for bypassPDF remains unchanged
+  else if (event.data.bypassPDF) {  
+    const text = event.data.messages[event.data.messages.length - 1].content;
+    const directResponse = await ollama.generate(text);  
     self.postMessage({
-      type: "directChatWithAIResponse",
+      type: "directResponse",
       data: directResponse,
     });
-  } catch (error: unknown) {  // specify that error is of type unknown
-    if (error instanceof Error) {  // type guard
-      self.postMessage({
-        type: "error",
-        error: `Error in direct chat with AI: ${error.message}`,
-      });
-    } else {
-      // handle other cases, for example, by logging a generic error message
-      self.postMessage({
-        type: "error",
-        error: `An unknown error occurred in direct chat with AI.`,
-      });
-    }
-    throw error;
   }
-}
+  // New condition for direct AI inference using Ollama's API
+  else if (event.data.directChatWithAI) {
+    const text = event.data.messages[event.data.messages.length - 1].content;
+    try {
+      // Assuming ollama.generate interfaces with Ollama's /api/generate endpoint
+      const directResponse = await ollama.generate(text);
+      self.postMessage({
+        type: "directChatWithAIResponse",
+        data: directResponse,
+      });
+    } catch (error: unknown) {  // Specify that error is of type unknown
+      if (error instanceof Error) {  // Type check before accessing message property
+        self.postMessage({
+          type: "error",
+          error: `Error in direct chat with AI: ${error.message}`,
+        });
+      } else {
+        self.postMessage({
+          type: "error",
+          error: `An unknown error occurred`,
+        });
+      }
+      throw error;
+    }
+  }
   // Existing code for queryVectorStore remains unchanged
   else {
     try {
