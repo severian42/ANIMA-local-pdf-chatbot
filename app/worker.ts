@@ -170,17 +170,8 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
   });
 };
 
-// Remove the nested self.addEventListener, only keep one instance
+// Listen for messages from the main thread
 self.addEventListener("message", async (event: any) => {
-  // Check if 'event' and 'event.data' are defined
-  if (!event || !event.data) {
-    self.postMessage({
-      type: "error",
-      error: "Event or event data is undefined",
-    });
-    return;
-  }
-  
   self.postMessage({
     type: "log",
     data: `Received data!`,
@@ -196,35 +187,6 @@ self.addEventListener("message", async (event: any) => {
       });
       throw e;
     }
-  } else if (event.data.bypassPDF) {
-    const text = event.data.messages[event.data.messages.length - 1].content;
-    const directResponse = await ollama.generate(text);  
-    self.postMessage({
-      type: "directResponse",
-      data: directResponse,
-    });
-  } else if (event.data.directChatWithAI) {
-    const text = event.data.messages[event.data.messages.length - 1].content;
-    try {
-      const directResponse = await ollama.generate(text);
-      self.postMessage({
-        type: "directChatWithAIResponse",
-        data: directResponse,
-      });
-    } catch (error: unknown) {
-      if (error instanceof Error) {
-        self.postMessage({
-          type: "error",
-          error: `Error in direct chat with AI: ${error.message}`,
-        });
-      } else {
-        self.postMessage({
-          type: "error",
-          error: `An unknown error occurred`,
-        });
-      }
-      throw error;
-    }
   } else {
     try {
       await queryVectorStore(event.data.messages);
@@ -236,6 +198,7 @@ self.addEventListener("message", async (event: any) => {
       throw e;
     }
   }
+
   self.postMessage({
     type: "complete",
     data: "OK",
