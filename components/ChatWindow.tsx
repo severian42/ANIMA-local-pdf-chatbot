@@ -20,6 +20,7 @@ export function ChatWindow(props: {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
   const [readyToChat, setReadyToChat] = useState(false);
+  const [skipEmbed, setSkipEmbed] = useState(false); // New state to control skipping of PDF embedding
 
   const worker = useRef<Worker | null>(null);
 
@@ -155,7 +156,12 @@ export function ChatWindow(props: {
     };
     worker.current?.addEventListener("message", onMessageReceived);
   }
-
+  
+  const skipEmbedding = () => {
+    setSkipEmbed(true);
+    setReadyToChat(true);
+  };
+  
   const choosePDFComponent = (
     <>
       <div className="p-4 md:p-8 rounded bg-[#25252d] w-full max-h-[85%] overflow-hidden flex flex-col">
@@ -209,6 +215,9 @@ export function ChatWindow(props: {
           </div>
           <span className={isLoading ? "hidden" : ""}>Embed</span>
         </button>
+        <button onClick={skipEmbedding} className="shrink-0 px-8 py-4 bg-sky-600 rounded w-28">
+        Skip Embed
+      </button>
       </form>
     </>
   );
@@ -251,9 +260,9 @@ export function ChatWindow(props: {
   );
 
   return (
-    <div className={`flex flex-col items-center p-4 md:p-8 rounded grow overflow-hidden ${(readyToChat ? "border" : "")}`}>
-      <h2 className={`${readyToChat ? "" : "hidden"} text-2xl`}> {titleText}</h2>
-      {readyToChat
+    <div className={`flex flex-col items-center p-4 md:p-8 rounded grow overflow-hidden ${(readyToChat || skipEmbed) ? "border" : ""}`}>
+      <h2 className={`${(readyToChat || skipEmbed) ? "" : "hidden"} text-2xl`}> {titleText}</h2>
+      {(readyToChat || skipEmbed)  // Modified this line
         ? chatInterfaceComponent
         : choosePDFComponent}
       <ToastContainer/>
