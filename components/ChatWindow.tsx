@@ -19,7 +19,7 @@ export function ChatWindow(props: {
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
-  const [readyToChat, setReadyToChat] = useState(true);
+  const [readyToChat, setReadyToChat] = useState(false);
 
   const worker = useRef<Worker | null>(null);
 
