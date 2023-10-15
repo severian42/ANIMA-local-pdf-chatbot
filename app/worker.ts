@@ -170,13 +170,6 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
   });
 };
 
-// Function to preload PDF
-const preloadPDF = async (pdfURL: string) => {
-  const response = await fetch(pdfURL);
-  const pdfBlob = await response.blob();
-  return pdfBlob;
-};
-
 // Initialize worker and preload PDF
 let preloadedPDFBlob: Blob;
 
