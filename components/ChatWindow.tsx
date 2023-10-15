@@ -3,8 +3,7 @@
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import { useRef, useState, useEffect } from "react";
-import type { FormEvent } from "react";
+import { useRef, useState, useEffect, FormEvent } from "react";
 
 import { ChatMessageBubble } from "@/components/ChatMessageBubble";
 import { ChatWindowMessage } from '@/schema/ChatWindowMessage';
@@ -20,7 +19,6 @@ export function ChatWindow(props: {
   const [isLoading, setIsLoading] = useState(true);
   const [selectedPDF, setSelectedPDF] = useState<File | null>(null);
   const [readyToChat, setReadyToChat] = useState(false);
-  const [skipEmbed, setSkipEmbed] = useState(false); // New state to control skipping of PDF embedding
 
   const worker = useRef<Worker | null>(null);
 
@@ -157,10 +155,6 @@ export function ChatWindow(props: {
     worker.current?.addEventListener("message", onMessageReceived);
   }
   
-  const skipEmbedding = () => {
-    setSkipEmbed(true);
-    setReadyToChat(true);
-  };
   
   const choosePDFComponent = (
     <>
@@ -260,12 +254,10 @@ export function ChatWindow(props: {
   );
 
   return (
-    <div className={`flex flex-col items-center p-4 md:p-8 rounded grow overflow-hidden ${(readyToChat || skipEmbed) ? "border" : ""}`}>
-      <h2 className={`${(readyToChat || skipEmbed) ? "" : "hidden"} text-2xl`}> {titleText}</h2>
-      {(readyToChat || skipEmbed)  // Modified this line
-        ? chatInterfaceComponent
-        : choosePDFComponent}
-      <ToastContainer/>
-    </div>
-  );
-}
+  <div className={`flex flex-col items-center p-4 md:p-8 rounded grow overflow-hidden ${readyToChat ? "border" : ""}`}>
+    <h2 className={`${readyToChat ? "" : "hidden"} text-2xl`}> {titleText}</h2>
+    {readyToChat ? chatInterfaceComponent : choosePDFComponent}
+    <ToastContainer/>
+  </div>
+);
+
