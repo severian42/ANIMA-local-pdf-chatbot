@@ -8,7 +8,7 @@ import { ChatWindowMessage } from '@/schema/ChatWindowMessage';
 import { useState, type FormEvent } from "react";
 import { Feedback } from 'langsmith';
 
-export function ChatMessageBubble(props: { message: ChatWindowMessage, aiEmoji?: string }) {
+export function ChatMessageBubble(props: { message: ChatWindowMessage }) {
   const { role, content, runId } = props.message;
 
   const colorClassName =
