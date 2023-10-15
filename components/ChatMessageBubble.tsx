@@ -81,7 +81,7 @@ export function ChatMessageBubble(props: { message: ChatWindowMessage }) {
     >
       <div className="flex">
         <div className="mr-2">
-          {prefix}
+          
         </div>
         <div className="whitespace-pre-wrap">
           {content.trim()}
