@@ -27,7 +27,7 @@ const voyClient = new VoyClient();
 const vectorstore = new VoyVectorStore(voyClient, embeddings);
 const ollama = new ChatOllama({
   baseUrl: "http://localhost:11435",
-  temperature: 0.3,
+  temperature: 0.5,
   model: "severian/anima",
 });
 
@@ -170,29 +170,6 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
   });
 };
 
-// Initialize worker and preload PDF
-let preloadedPDFBlob: Blob;
-
-// Function to preload PDF
-const preloadPDF = async (pdfURL: string) => {
-  const response = await fetch(pdfURL);
-  const pdfBlob = await response.blob();
-  return pdfBlob;
-};
-
-// Use an immediately invoked async function to preload the PDF
-(async () => {
-  try {
-    preloadedPDFBlob = await preloadPDF('/biomimetics-07-00103.pdf');
-  } catch (e: any) {
-    self.postMessage({
-      type: "error",
-      error: `Failed to preload PDF: ${e.message}`,
-    });
-    throw e;
-  }
-})();
-
 // Listen for messages from the main thread
 self.addEventListener("message", async (event: any) => {
   self.postMessage({
@@ -203,16 +180,10 @@ self.addEventListener("message", async (event: any) => {
   if (event.data.pdf) {
     try {
       await embedPDF(event.data.pdf);
-    } catch (e: any) {
+      // Place your postMessage here to indicate the PDF has been embedded
       self.postMessage({
-        type: "error",
-        error: e.message,
+        type: "pdfLoaded",
       });
-      throw e;
-    }
-  } else if (event.data.usePreloadedPDF) {  // New condition for preloaded PDF
-    try {
-      await embedPDF(preloadedPDFBlob);
     } catch (e: any) {
       self.postMessage({
         type: "error",
@@ -232,6 +203,7 @@ self.addEventListener("message", async (event: any) => {
     }
   }
 
+  // This message indicates the end of processing in any case
   self.postMessage({
     type: "complete",
     data: "OK",

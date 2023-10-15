@@ -59,6 +59,13 @@ export function ChatWindow(props: {
     });
 
   }
+  
+  async function preloadPDF() {
+    if (selectedPDF !== null) {
+      worker.current?.postMessage({ pdf: selectedPDF });
+    }
+  }
+  
 
   async function sendMessage(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -107,14 +114,19 @@ export function ChatWindow(props: {
 
   // We use the `useEffect` hook to set up the worker as soon as the `App` component is mounted.
   useEffect(() => {
-    if (!worker.current) {
-      // Create the worker if it does not yet exist.
-      worker.current = new Worker(new URL('../app/worker.ts', import.meta.url), {
-        type: 'module',
-      });
-      setIsLoading(false);
+    if (worker.current) {
+      const onMessageReceived = (e: any) => {
+        if (e.data.type === 'pdfLoaded') {
+          setReadyToChat(true);
+        }
+      };
+      worker.current.addEventListener("message", onMessageReceived);
+      return () => {
+        worker.current?.removeEventListener("message", onMessageReceived);
+      };
     }
   }, []);
+  
 
   async function embedPDF (e: FormEvent<HTMLFormElement>) {
     console.log(e);
@@ -257,6 +269,7 @@ export function ChatWindow(props: {
     {readyToChat ? chatInterfaceComponent : choosePDFComponent}
     <ToastContainer/>
   </div>
-);}
+);
+}
 
 
