@@ -170,6 +170,34 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
   });
 };
 
+// Function to preload PDF
+const preloadPDF = async (pdfURL: string) => {
+  const response = await fetch(pdfURL);
+  const pdfBlob = await response.blob();
+  return pdfBlob;
+};
+
+// Initialize worker and preload PDF
+let preloadedPDFBlob: Blob;
+
+// Function to preload PDF
+const preloadPDF = async (pdfURL: string) => {
+  const response = await fetch(pdfURL);
+  const pdfBlob = await response.blob();
+  return pdfBlob;
+};
+
+// Try to preload the PDF at worker initialization
+try {
+  preloadedPDFBlob = await preloadPDF('/biomimetics-07-00103.pdf');
+} catch (e: any) {
+  self.postMessage({
+    type: "error",
+    error: `Failed to preload PDF: ${e.message}`,
+  });
+  throw e;
+}
+
 // Listen for messages from the main thread
 self.addEventListener("message", async (event: any) => {
   self.postMessage({
@@ -180,6 +208,16 @@ self.addEventListener("message", async (event: any) => {
   if (event.data.pdf) {
     try {
       await embedPDF(event.data.pdf);
+    } catch (e: any) {
+      self.postMessage({
+        type: "error",
+        error: e.message,
+      });
+      throw e;
+    }
+  } else if (event.data.usePreloadedPDF) {  // New condition for preloaded PDF
+    try {
+      await embedPDF(preloadedPDFBlob);
     } catch (e: any) {
       self.postMessage({
         type: "error",
