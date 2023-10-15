@@ -170,20 +170,17 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
   });
 };
 
-
-  if (event.data.pdf) {
-    try {
-      await embedPDF(event.data.pdf);
-    } catch (e: any) {
-      self.postMessage({
-        type: "error",
-        error: e.message,
-      });
-      throw e;
-    }
-  } 
-  // Existing condition for bypassPDF remains unchanged
-  self.addEventListener("message", async (event: any) => {
+// Remove the nested self.addEventListener, only keep one instance
+self.addEventListener("message", async (event: any) => {
+  // Check if 'event' and 'event.data' are defined
+  if (!event || !event.data) {
+    self.postMessage({
+      type: "error",
+      error: "Event or event data is undefined",
+    });
+    return;
+  }
+  
   self.postMessage({
     type: "log",
     data: `Received data!`,
@@ -199,28 +196,23 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
       });
       throw e;
     }
-  } 
-  // Existing condition for bypassPDF remains unchanged
-  else if (event.data.bypassPDF) {  
+  } else if (event.data.bypassPDF) {
     const text = event.data.messages[event.data.messages.length - 1].content;
     const directResponse = await ollama.generate(text);  
     self.postMessage({
       type: "directResponse",
       data: directResponse,
     });
-  }
-  // New condition for direct AI inference using Ollama's API
-  else if (event.data.directChatWithAI) {
+  } else if (event.data.directChatWithAI) {
     const text = event.data.messages[event.data.messages.length - 1].content;
     try {
-      // Assuming ollama.generate interfaces with Ollama's /api/generate endpoint
       const directResponse = await ollama.generate(text);
       self.postMessage({
         type: "directChatWithAIResponse",
         data: directResponse,
       });
-    } catch (error: unknown) {  // Specify that error is of type unknown
-      if (error instanceof Error) {  // Type check before accessing message property
+    } catch (error: unknown) {
+      if (error instanceof Error) {
         self.postMessage({
           type: "error",
           error: `Error in direct chat with AI: ${error.message}`,
@@ -233,9 +225,7 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
       }
       throw error;
     }
-  }
-  // Existing code for queryVectorStore remains unchanged
-  else {
+  } else {
     try {
       await queryVectorStore(event.data.messages);
     } catch (e: any) {
