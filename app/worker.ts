@@ -170,15 +170,6 @@ const queryVectorStore = async (messages: ChatWindowMessage[]) => {
   });
 };
 
-// Listen for messages from the main thread
-// Listen for messages from the main thread
-self.addEventListener("message", async (event: any) => {
-  self.postMessage({
-    type: "log",
-    data: `Received data!`,
-  });
-  
-
 // New condition added to the event listener
 self.addEventListener("message", async (event: any) => {
   self.postMessage({
