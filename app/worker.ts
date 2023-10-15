@@ -177,6 +177,14 @@ self.addEventListener("message", async (event: any) => {
     type: "log",
     data: `Received data!`,
   });
+  
+
+// New condition added to the event listener
+self.addEventListener("message", async (event: any) => {
+  self.postMessage({
+    type: "log",
+    data: `Received data!`,
+  });
 
   if (event.data.pdf) {
     try {
@@ -188,15 +196,36 @@ self.addEventListener("message", async (event: any) => {
       });
       throw e;
     }
-  } else if (event.data.bypassPDF) {  // New condition to check for direct chat
+  } 
+  // Existing condition for bypassPDF remains unchanged
+  else if (event.data.bypassPDF) {  
     const text = event.data.messages[event.data.messages.length - 1].content;
-    const directResponse = await ollama.generate(text);  // Replace 'generate' with actual function if different
-
+    const directResponse = await ollama.generate(text);  
     self.postMessage({
       type: "directResponse",
       data: directResponse,
     });
-  } else {
+  }
+  // New condition for direct AI inference using Ollama's API
+  else if (event.data.directChatWithAI) {
+    const text = event.data.messages[event.data.messages.length - 1].content;
+    try {
+      // Assuming ollama.generate interfaces with Ollama's /api/generate endpoint
+      const directResponse = await ollama.generate(text);
+      self.postMessage({
+        type: "directChatWithAIResponse",
+        data: directResponse,
+      });
+    } catch (error) {
+      self.postMessage({
+        type: "error",
+        error: `Error in direct chat with AI: ${error.message}`,
+      });
+      throw error;
+    }
+  }
+  // Existing code for queryVectorStore remains unchanged
+  else {
     try {
       await queryVectorStore(event.data.messages);
     } catch (e: any) {
@@ -207,10 +236,8 @@ self.addEventListener("message", async (event: any) => {
       throw e;
     }
   }
-
   self.postMessage({
     type: "complete",
     data: "OK",
   });
 });
-
