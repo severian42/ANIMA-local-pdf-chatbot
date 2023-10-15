@@ -260,6 +260,6 @@ export function ChatWindow(props: {
       <ToastContainer/>
     </div>
   );
-  
+} 
 
 
