@@ -160,7 +160,7 @@ export function ChatWindow(props: {
     <>
       <div className="p-4 md:p-8 rounded bg-[#25252d] w-full max-h-[85%] overflow-hidden flex flex-col">
         <h1 className="text-3xl md:text-4xl mb-2 ml-auto mr-auto">
-          ANIMA - Chat with you PDF
+          ANIMA - Chat with your PDF
         </h1>
         
         <ul>
@@ -180,7 +180,7 @@ export function ChatWindow(props: {
               <br/>
               <pre className="inline-flex px-2 py-1 my-2 rounded">$ ollama run severian/anima
               <br/>
-              $ OLLAMA_ORIGINS=https://https://anima-local-pdf-chatbot.vercel.app OLLAMA_HOST=127.0.0.1:11435 ollama serve</pre>
+              $ OLLAMA_ORIGINS=https://https://anima-pdf-chat.vercel.app OLLAMA_HOST=127.0.0.1:11435 ollama serve</pre>
             </span>
           </li>
           <li className="hidden text-l md:block">
