@@ -192,9 +192,8 @@ export function ChatWindow(props: {
           <li className="text-l">
             👇
             <span className="ml-2">
-              Try embedding a PDF below, then asking questions! You can even turn off your WiFi. <a href="/anima-pdf-chatbot/PDF/biomimetics-07-00103.pdf" download className="text-blue-500 hover:underline ml-2">
-                Download a sample PDF
-              </a>
+              Try embedding a PDF below, then asking questions! You can even turn off your WiFi. 
+              
             </span>
           </li>
         </ul>
