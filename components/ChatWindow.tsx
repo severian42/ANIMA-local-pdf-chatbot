@@ -233,7 +233,7 @@ export function ChatWindow(props: {
           ""
         )}
       </div>
-
+  
       <form onSubmit={sendMessage} className="flex w-full flex-col">
         <div className="flex w-full mt-4">
           <input
@@ -244,7 +244,7 @@ export function ChatWindow(props: {
           />
           <button type="submit" className="shrink-0 px-8 py-4 bg-sky-600 rounded w-28">
             <div role="status" className={`${isLoading ? "" : "hidden"} flex justify-center`}>
-              // Your loading SVG here
+              {/* Your loading SVG here */}
             </div>
             <span className={isLoading ? "hidden" : ""}>Send</span>
           </button>
@@ -252,7 +252,7 @@ export function ChatWindow(props: {
       </form>
     </>
   );
-
+  
   return (
     <div className={`flex flex-col items-center p-4 md:p-8 rounded grow overflow-hidden ${readyToChat ? "border" : ""}`}>
       <h2 className={`${readyToChat ? "" : "hidden"} text-2xl`}> {titleText}</h2>
@@ -260,6 +260,6 @@ export function ChatWindow(props: {
       <ToastContainer/>
     </div>
   );
-}
+  
 
 
