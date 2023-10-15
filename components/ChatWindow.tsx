@@ -257,6 +257,6 @@ export function ChatWindow(props: {
     {readyToChat ? chatInterfaceComponent : choosePDFComponent}
     <ToastContainer/>
   </div>
-);
+);}
 
 
