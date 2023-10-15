@@ -4,7 +4,7 @@
 
 /* Background and Text */
 body {
-  color: #252525;  /* Light Gray for better contrast */
+  color: #c2c2c2;  /* Light Gray for better contrast */
   background: #013220;  /* Deep Forest Green */
 }
 
@@ -38,7 +38,7 @@ pre {
 /* Preformatted Text */
 pre {
   background-color: #2E8B57;  /* Sea Green */
-  color: #D3D3D3;  /* Light Gray */
+  color: #828282;  /* Light Gray */
 }
 
 /* List Items */
