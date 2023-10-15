@@ -1,41 +1,52 @@
-# 🏠 Fully Client-Side Chat Over Documents
 
-Yes, it's another chat over documents implementation... but this one is entirely local!
-
-![](/public/images/demo.gif)
-
-It's a Next.js app that read the content of an uploaded PDF, chunks it, adds it to a vector store, and
-performs RAG, all client side. You can even turn off your WiFi after the site loads!
-
-You can see a live version at https://webml-demo.vercel.app.
-
-Users will need to download and set up [Ollama](https://ollama.ai), then run the following commands to
-allow the site access to a locally running Mistral instance:
 
 ```bash
 $ ollama run mistral
 $ OLLAMA_ORIGINS=https://webml-demo.vercel.app OLLAMA_HOST=127.0.0.1:11435 ollama serve
 ```
 
-## ⚡ Stack
+# ANIMA Chatbot 🌿🤖
 
-It uses the following:
+<div align="center">
+    <img src="your-logo-url-here" width="200">
+</div>
 
-- [Voy](https://github.com/tantaraio/voy) as the vector store, fully WASM in the browser.
-- [Ollama](https://ollama.ai/) to run an LLM locally and expose it to the web app.
-- [LangChain.js](https://js.langchain.com) to call the models, perform retrieval, and generally orchestrate all the pieces.
-- [Transformers.js](https://huggingface.co/docs/transformers.js/index) to run embeddings in the browser.
+![Build Status](https://img.shields.io/badge/build-passing-green)
+![Version 1.0](https://img.shields.io/badge/version-1.0-blue)
+![Python](https://img.shields.io/badge/python-3.8+-blue)
 
-I wanted to run as much of the app as possible directly in the browser, but you can swap in [Ollama embeddings](https://js.langchain.com/docs/modules/data_connection/text_embedding/integrations/ollama) as well.
+---
 
-## 🔱 Forking
+## Introduction 🌱
 
-To run/deploy this yourself, simply fork this repo and install the required dependencies with `yarn`.
+ANIMA is an Advanced Nature Inspired Multidisciplinary Assistant designed to propose biomimetic solutions to challenges across various domains.
 
-There are no required environment variables!
+---
 
-## 🙏 Thank you!
+## Features 🌟
 
-Special thanks to [@dawchihliou](https://twitter.com/dawchihliou) for making Voy, [@jmorgan](https://twitter.com/jmorgan) and [@mchiang0610](https://twitter.com/mchiang0610) for making Ollama and for your feedback, and [@xenovacom](https://twitter.com/xenovacom) for making Transformers.js.
+- **Multidisciplinary Knowledge**: Expert in biomimicry, biology, engineering, and more.
+- **Intuitive UI**: Easy-to-use and visually pleasing interface.
+- **Customization**: Adjustable parameters for personalized interactions.
 
-For more, follow me on Twitter [@Hacubu](https://x.com/hacubu)!
+---
+
+## Installation 🛠️
+
+\`\`\`bash
+$ ollama run mistral
+$ OLLAMA_ORIGINS=https://webml-demo.vercel.app OLLAMA_HOST=127.0.0.1:11435 ollama serve
+\`\`\`
+
+---
+
+## License 📝
+
+This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
+
+---
+
+## Acknowledgments 🙏
+
+- Inspired by the concepts of biomimicry and environmental science.
+- Thanks to all contributors and open-source libraries used in this project.
