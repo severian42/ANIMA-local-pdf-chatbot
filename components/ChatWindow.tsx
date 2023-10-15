@@ -220,7 +220,7 @@ export function ChatWindow(props: {
           [...messages]
             .reverse()
             .map((m, i) => (
-              <ChatMessageBubble key={i} message={m} aiEmoji={emoji}></ChatMessageBubble>
+              <ChatMessageBubble key={i} message={m} </ChatMessageBubble>
             ))
         ) : (
           ""
@@ -252,7 +252,7 @@ export function ChatWindow(props: {
 
   return (
     <div className={`flex flex-col items-center p-4 md:p-8 rounded grow overflow-hidden ${(readyToChat ? "border" : "")}`}>
-      <h2 className={`${readyToChat ? "" : "hidden"} text-2xl`}>{emoji} {titleText}</h2>
+      <h2 className={`${readyToChat ? "" : "hidden"} text-2xl`}> {titleText}</h2>
       {readyToChat
         ? chatInterfaceComponent
         : choosePDFComponent}
