@@ -211,8 +211,9 @@ export function ChatWindow(props: {
       <form onSubmit={embedPDF} className="mt-4 flex justify-between items-center w-full">
       <input id="file_input" type="file" accept="pdf" className="text-white" onChange={(e) => e.target.files ? setSelectedPDF(e.target.files[0]) : null}></input>
         <button type="submit" className="shrink-0 px-8 py-4 bg-sky-600 rounded w-28">
-          <div role="status" className={`${isLoading ? "" : "hidden"} flex justify-center`}>
-            // Your loading SVG here
+          
+            {/* Your loading SVG here */}
+            <div role="status" className={`${isLoading ? "" : "hidden"} flex justify-center`}>
           </div>
           <span className={isLoading ? "hidden" : ""}>Embed</span>
         </button>
