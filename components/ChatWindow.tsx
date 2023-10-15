@@ -209,9 +209,7 @@ export function ChatWindow(props: {
           </div>
           <span className={isLoading ? "hidden" : ""}>Embed</span>
         </button>
-        <button onClick={skipEmbedding} className="shrink-0 px-8 py-4 bg-sky-600 rounded w-28">
-        Skip Embed
-      </button>
+      
       </form>
     </>
   );
