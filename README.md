@@ -19,7 +19,7 @@ ANIMA is an Advanced Nature Inspired Multidisciplinary Assistant designed to pro
 
 ## Installation 
 
-Make sure you download OLLAMA](https://ollama.ai/) (MacOS + Linux)
+Make sure you download [OLLAMA](https://ollama.ai/) (MacOS + Linux)
 
 Open up your Terminal and run the following commands separately.
 
